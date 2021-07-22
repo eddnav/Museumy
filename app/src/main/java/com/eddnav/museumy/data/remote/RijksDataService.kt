@@ -7,5 +7,5 @@ import retrofit2.http.Path
 interface RijksDataService {
 
     @GET("{culture}/collection")
-    fun collection(@Path("culture") language: String): List<ArtObject>
+    suspend fun collection(@Path("culture") language: String): List<ArtObject>
 }
