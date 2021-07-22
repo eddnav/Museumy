@@ -4,5 +4,5 @@ data class ArtObject(
     val objectNumber: String,
     val title: String,
     val imageUrl: String,
-    val primaryMaker: String
+    val primaryAuthor: String
 )
