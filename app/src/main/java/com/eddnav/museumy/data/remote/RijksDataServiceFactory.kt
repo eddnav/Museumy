@@ -18,6 +18,7 @@ object RijksDataServiceFactory {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(RijksDataAuthInterceptor())
             .build()
 
         val retrofit = Retrofit.Builder()
