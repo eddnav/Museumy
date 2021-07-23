@@ -9,7 +9,7 @@ data class ArtObject(
     @Json(name = "title")
     val title: String,
     @Json(name = "webImage")
-    val image: Image,
+    val image: Image?,
     @Json(name = "principalOrFirstMaker")
     val primaryAuthor: String
 )

@@ -6,6 +6,6 @@ import com.eddnav.museumy.data.remote.model.ArtObject as RemoteArtObject
 fun RemoteArtObject.toDomain(): ArtObject = ArtObject(
     objectNumber,
     title,
-    image.url,
+    image?.url,
     primaryAuthor
 )
