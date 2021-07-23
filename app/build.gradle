@@ -25,6 +25,10 @@ android {
         buildConfigField 'String', OPT_RIJKS_DATA_API_KEY, RIJKS_DATA_API_KEY
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
