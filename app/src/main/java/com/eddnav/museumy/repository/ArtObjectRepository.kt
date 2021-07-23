@@ -6,22 +6,11 @@ import com.eddnav.museumy.repository.conversion.toDomain
 
 class ArtObjectRepository(private val rijksDataService: RijksDataService) {
 
-    private val primaryAuthors = linkedSetOf<String>()
-
-    suspend fun getGroupedArtObjects(): Map<String, List<ArtObject>> {
-        fetchPrimaryAuthors()
-        return primaryAuthors.associateWith { author ->
-            rijksDataService.collection(author)
-                .artObjects
-                .map { it.toDomain() }
-        }
-    }
-
-    private suspend fun fetchPrimaryAuthors() {
-        rijksDataService.collection()
-            .artObjects
-            .mapTo(primaryAuthors) {
-                it.primaryAuthor
-            }
-    }
+     suspend fun getArtObjects(): ArtObject {
+         rijksDataService.collection()
+             .artObjects
+             .map {
+                 it.toDomain()
+             }
+     }
 }

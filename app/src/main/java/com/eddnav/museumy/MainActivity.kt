@@ -1,8 +1,8 @@
 package com.eddnav.museumy
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.eddnav.museumy.repository.ArtObjectRepository
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         lifecycleScope.launch {
-            val objects = artObjectRepository.getGroupedArtObjects()
+            val objects = artObjectRepository.getArtObjects()
             Log.d("Test", objects.toString())
         }
     }
