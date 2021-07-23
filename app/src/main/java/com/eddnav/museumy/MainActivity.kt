@@ -10,15 +10,8 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val artworkRepository: ArtworkRepository by inject()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        lifecycleScope.launch {
-            val objects = artworkRepository.getArtworks()
-            Log.d("Test", objects.toString())
-        }
     }
 }
