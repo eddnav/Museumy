@@ -14,17 +14,11 @@ class AuthorNameItemView @JvmOverloads constructor(
 
     private val binding = ViewAuthorNameItemBinding.inflate(LayoutInflater.from(context))
 
-    var name: String? = null
-        set(value) {
-            field = value
-            update()
-        }
-
     init {
         addView(binding.root)
     }
 
-    private fun update() {
-        binding.title.text = name
+    fun setItem(item: AuthorNameItem) {
+        binding.title.text = item.name
     }
 }

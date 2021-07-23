@@ -20,20 +20,22 @@ class GalleryItemPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GalleryItem> {
         val page = params.key ?: INITIAL_PAGE
-        val artworks = artworkRepository.getArtworks(page, PAGE_SIZE)
+        val loadSize = params.loadSize
+        val artworks = artworkRepository.getArtworks(page, loadSize)
 
-        val lastPage = artworks.size < PAGE_SIZE
+        val lastPage = artworks.size < loadSize
         val nextPage = if (lastPage) {  null } else { page + 1 }
 
         return LoadResult.Page(
-            data = createNewData(artworks),
+            data = createNewData(artworks, page),
             prevKey = null,
             nextKey = nextPage
         )
     }
 
-    private fun createNewData(artworks: List<Artwork>): List<GalleryItem> =
+    private fun createNewData(artworks: List<Artwork>, page: Int): List<GalleryItem> =
         with(mutableListOf<GalleryItem>()) {
+            add(AuthorNameItem("PAGE $page"))
             artworks.forEach {
                 val isFromNewAuthor = it.primaryAuthor != previousAuthor
                 if (isFromNewAuthor) {
@@ -49,6 +51,5 @@ class GalleryItemPagingSource(
 
     companion object {
         private const val INITIAL_PAGE = 1
-        private const val PAGE_SIZE = 30
     }
 }

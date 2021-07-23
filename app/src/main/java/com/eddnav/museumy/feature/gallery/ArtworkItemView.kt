@@ -14,18 +14,11 @@ class ArtworkItemView @JvmOverloads constructor(
 
     private val binding = ViewArtworkItemBinding.inflate(LayoutInflater.from(context))
 
-    var artworkItem: ArtworkItem? = null
-        set(value) {
-            field = value
-            update()
-        }
-
     init {
         addView(binding.root)
     }
 
-    private fun update() {
-        val artworkItem = artworkItem ?: return
-        binding.title.text = artworkItem.artwork.title
+    fun setItem(item: ArtworkItem) {
+        binding.title.text = item.artwork.title
     }
 }
