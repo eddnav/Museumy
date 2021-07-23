@@ -6,8 +6,8 @@ import com.eddnav.museumy.repository.conversion.toDomain
 
 class ArtworkRepository(private val rijksDataService: RijksDataService) {
 
-    suspend fun getArtworks(): List<Artwork> =
-        rijksDataService.collection()
+    suspend fun getArtworks(page: Int, pageSize: Int): List<Artwork> =
+        rijksDataService.collection(page, pageSize)
             .artworks
             .map {
                 it.toDomain()
