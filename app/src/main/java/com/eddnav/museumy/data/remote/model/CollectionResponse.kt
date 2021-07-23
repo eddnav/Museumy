@@ -1,5 +1,8 @@
 package com.eddnav.museumy.data.remote.model
 
+import com.squareup.moshi.Json
+
 data class CollectionResponse(
-    val artObjects: List<ArtObject>
+    @Json(name = "ArtObjects")
+    val artworks: List<Artwork>
 )

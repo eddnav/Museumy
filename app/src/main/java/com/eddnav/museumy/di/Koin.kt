@@ -2,7 +2,7 @@ package com.eddnav.museumy.di
 
 import com.eddnav.museumy.data.MoshiFactory
 import com.eddnav.museumy.data.remote.RijksDataServiceFactory
-import com.eddnav.museumy.repository.ArtObjectRepository
+import com.eddnav.museumy.repository.ArtworkRepository
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -24,6 +24,6 @@ object Koin {
     }
 
     private val repositoryModule = module {
-        single { ArtObjectRepository(get()) }
+        single { ArtworkRepository(get()) }
     }
 }

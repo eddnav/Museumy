@@ -3,10 +3,10 @@ package com.eddnav.museumy.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.eddnav.museumy.feature.gallery.GalleryItem
-import com.eddnav.museumy.repository.ArtObjectRepository
+import com.eddnav.museumy.repository.ArtworkRepository
 
 class GalleryItemPagingSource(
-    val artObjectRepository: ArtObjectRepository
+    val artworkRepository: ArtworkRepository
 ) : PagingSource<Int, GalleryItem>() {
 
     private val authorIndex = setOf<String>()
