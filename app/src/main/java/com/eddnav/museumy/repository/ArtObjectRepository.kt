@@ -6,11 +6,10 @@ import com.eddnav.museumy.repository.conversion.toDomain
 
 class ArtObjectRepository(private val rijksDataService: RijksDataService) {
 
-     suspend fun getArtObjects(): ArtObject {
-         rijksDataService.collection()
-             .artObjects
-             .map {
-                 it.toDomain()
-             }
-     }
+    suspend fun getArtObjects(): List<ArtObject> =
+        rijksDataService.collection()
+            .artObjects
+            .map {
+                it.toDomain()
+            }
 }
