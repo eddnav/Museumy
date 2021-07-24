@@ -19,7 +19,7 @@
         tools:listitem="@layout/view_artwork_item" />
 
     <LinearLayout
-        android:id="@+id/errorView"
+        android:id="@+id/errorContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_m"

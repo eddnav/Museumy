@@ -22,6 +22,7 @@ import org.koin.android.ext.android.inject
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     private lateinit var binding: FragmentGalleryBinding
+    
     private val adapter = GalleryItemAdapter()
     private val repository: ArtworkRepository by inject()
 
@@ -45,22 +46,24 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     }
 
     private fun setupGalleryList() {
+        with(adapter) {
+            addLoadStateListener {
+                binding.progressIndicator.isVisible = it.refresh is LoadState.Loading
+                binding.errorContainer.isVisible = it.refresh is LoadState.Error
+            }
+        }
+        val concatAdapter = adapter.withLoadStateFooter(
+            footer = LoadStateAdapter(adapter::retry)
+        )
         with(binding.galleryList) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@GalleryFragment.adapter
-                .withLoadStateFooter(
-                    footer = LoadStateAdapter()
-                )
+            adapter = concatAdapter
             addItemDecoration(
                 SpacingItemDecoration(
                     resources.getDimensionPixelSize(R.dimen.spacing_m),
                     resources.getDimensionPixelSize(R.dimen.spacing_xs)
                 )
             )
-        }
-        adapter.addLoadStateListener {
-            binding.progressIndicator.isVisible = it.refresh is LoadState.Loading
-            binding.errorView.isVisible = it.refresh is LoadState.Error
         }
         lifecycleScope.launch {
             pager.flow.collect {
