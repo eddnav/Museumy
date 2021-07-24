@@ -7,6 +7,9 @@ import com.eddnav.museumy.feature.gallery.ArtworkItem
 import com.eddnav.museumy.feature.gallery.AuthorNameItem
 import com.eddnav.museumy.feature.gallery.GalleryItem
 import com.eddnav.museumy.repository.ArtworkRepository
+import okio.IOException
+import retrofit2.HttpException
+import java.lang.Exception
 
 class GalleryItemPagingSource(
     private val artworkRepository: ArtworkRepository
@@ -19,22 +22,26 @@ class GalleryItemPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GalleryItem> {
-        val page = params.key ?: INITIAL_PAGE
-        val artworks = artworkRepository.getArtworks(page, PAGE_SIZE)
+        try {
+            val page = params.key ?: INITIAL_PAGE
+            val artworks = artworkRepository.getArtworks(page, PAGE_SIZE)
 
-        val lastPage = artworks.size < PAGE_SIZE
-        val previousPage = if (page == INITIAL_PAGE) null else page - 1
-        val nextPage = if (lastPage) {
-            null
-        } else {
-            page + 1
+            val lastPage = artworks.size < PAGE_SIZE
+            val previousPage = if (page == INITIAL_PAGE) null else page - 1
+            val nextPage = if (lastPage) {
+                null
+            } else {
+                page + 1
+            }
+
+            return LoadResult.Page(
+                data = createNewData(artworks, page),
+                prevKey = previousPage,
+                nextKey = nextPage
+            )
+        } catch (e: Exception) {
+            return LoadResult.Error(e)
         }
-
-        return LoadResult.Page(
-            data = createNewData(artworks, page),
-            prevKey = previousPage,
-            nextKey = nextPage
-        )
     }
 
     private fun createNewData(artworks: List<Artwork>, page: Int): List<GalleryItem> =

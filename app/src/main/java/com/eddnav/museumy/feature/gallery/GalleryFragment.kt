@@ -2,8 +2,10 @@ package com.eddnav.museumy.feature.gallery
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +24,6 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private lateinit var binding: FragmentGalleryBinding
     private val adapter = GalleryItemAdapter()
     private val repository: ArtworkRepository by inject()
-    private val source = GalleryItemPagingSource(repository)
 
     /**
      * This value is not used, GallerItemPagingSource ignores
@@ -32,7 +33,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val pagingConfig = PagingConfig(pageSize = 10)
     private val pager =
         Pager(
-            pagingSourceFactory = { source },
+            pagingSourceFactory = { GalleryItemPagingSource(repository) },
             config = pagingConfig
         )
 
@@ -40,20 +41,32 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGalleryBinding.bind(view)
         setupGalleryList()
+        setupTryAgainButton()
     }
 
     private fun setupGalleryList() {
         with(binding.galleryList) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@GalleryFragment.adapter.withLoadStateFooter(
+            adapter = this@GalleryFragment.adapter
+                .withLoadStateFooter(
                 footer = LoadStateAdapter()
             )
             addItemDecoration(SpacingItemDecoration(resources.getDimensionPixelSize(R.dimen.spacing_m)))
+        }
+        adapter.addLoadStateListener {
+            binding.progressIndicator.isVisible = it.refresh is LoadState.Loading
+            binding.errorView.isVisible = it.refresh is LoadState.Error
         }
         lifecycleScope.launch {
             pager.flow.collect {
                 adapter.submitData(it)
             }
+        }
+    }
+
+    private fun setupTryAgainButton() {
+        binding.tryAgainButton.setOnClickListener {
+            adapter.refresh()
         }
     }
 }

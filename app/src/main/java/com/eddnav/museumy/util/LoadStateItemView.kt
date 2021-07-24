@@ -9,7 +9,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
-import com.eddnav.museumy.R
 import com.eddnav.museumy.databinding.ViewLoadStateItemBinding
 
 class LoadStateItemView @JvmOverloads constructor(
@@ -30,6 +29,6 @@ class LoadStateItemView @JvmOverloads constructor(
     }
 
     fun setLoadingState(loadingState: LoadState) {
-        //isVisible = loadingState is LoadState.Loading
+        isVisible = loadingState is LoadState.Loading
     }
 }
