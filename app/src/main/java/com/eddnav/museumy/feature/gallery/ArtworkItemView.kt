@@ -5,7 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.FrameLayout
+import coil.load
+import com.eddnav.museumy.R
 import com.eddnav.museumy.databinding.ViewArtworkItemBinding
 import com.google.android.material.card.MaterialCardView
 
@@ -26,7 +27,14 @@ class ArtworkItemView @JvmOverloads constructor(
     }
 
     fun setItem(item: ArtworkItem) {
-        binding.title.text = item.artwork.title
-        binding.identifier.text = item.artwork.identifier
+        with(binding) {
+            val artwork = item.artwork
+            title.text = artwork.title
+            identifier.text = artwork.identifier
+            image.load(artwork.imageUrl) {
+                crossfade(true)
+                fallback(R.drawable.ic_palette_48)
+            }
+        }
     }
 }
