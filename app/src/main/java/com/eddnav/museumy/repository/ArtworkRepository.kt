@@ -1,15 +1,21 @@
 package com.eddnav.museumy.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.eddnav.museumy.data.remote.RijksDataService
-import com.eddnav.museumy.domain.model.Artwork
-import com.eddnav.museumy.repository.conversion.toDomain
+import com.eddnav.museumy.repository.paging.ArtworkPagingSource
 
 class ArtworkRepository(private val rijksDataService: RijksDataService) {
 
-    suspend fun getArtworks(page: Int, pageSize: Int): List<Artwork> =
-        rijksDataService.collection(page, pageSize)
-            .artworks
-            .map {
-                it.toDomain()
-            }
+   /**
+    * This value is not used, [ArtworkPagingSource] ignores
+    * [androidx.paging.PagingSource.LoadParams.loadSize] due to the nature of the API's
+    * pagination mechanism.
+    */
+   private val pagingConfig = PagingConfig(pageSize = 10)
+
+   fun getArtworkPager() = Pager(
+      config = pagingConfig,
+      pagingSourceFactory = { ArtworkPagingSource(rijksDataService) }
+   )
 }

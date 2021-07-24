@@ -3,6 +3,7 @@ package com.eddnav.museumy.di
 import com.eddnav.museumy.data.MoshiFactory
 import com.eddnav.museumy.data.remote.RijksDataServiceFactory
 import com.eddnav.museumy.repository.ArtworkRepository
+import com.eddnav.museumy.usecase.GetGalleryItemPagingDataFlow
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -12,7 +13,8 @@ object Koin {
         get() = listOf(
             util,
             rijksDataModule,
-            repositoryModule
+            repositoryModule,
+            useCaseModule
         )
 
     private val util = module {
@@ -25,5 +27,9 @@ object Koin {
 
     private val repositoryModule = module {
         single { ArtworkRepository(get()) }
+    }
+
+    private val useCaseModule = module {
+        single { GetGalleryItemPagingDataFlow(get()) }
     }
 }
