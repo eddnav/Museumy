@@ -11,6 +11,7 @@ import com.eddnav.museumy.R
 import com.eddnav.museumy.databinding.FragmentGalleryBinding
 import com.eddnav.museumy.paging.GalleryItemPagingSource
 import com.eddnav.museumy.repository.ArtworkRepository
+import com.eddnav.museumy.util.LoadStateAdapter
 import com.eddnav.museumy.util.SpacingItemDecoration
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -44,7 +45,9 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private fun setupGalleryList() {
         with(binding.galleryList) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@GalleryFragment.adapter
+            adapter = this@GalleryFragment.adapter.withLoadStateFooter(
+                footer = LoadStateAdapter()
+            )
             addItemDecoration(SpacingItemDecoration(resources.getDimensionPixelSize(R.dimen.spacing_m)))
         }
         lifecycleScope.launch {
