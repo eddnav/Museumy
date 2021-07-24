@@ -49,9 +49,14 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@GalleryFragment.adapter
                 .withLoadStateFooter(
-                footer = LoadStateAdapter()
+                    footer = LoadStateAdapter()
+                )
+            addItemDecoration(
+                SpacingItemDecoration(
+                    resources.getDimensionPixelSize(R.dimen.spacing_m),
+                    resources.getDimensionPixelSize(R.dimen.spacing_xs)
+                )
             )
-            addItemDecoration(SpacingItemDecoration(resources.getDimensionPixelSize(R.dimen.spacing_m)))
         }
         adapter.addLoadStateListener {
             binding.progressIndicator.isVisible = it.refresh is LoadState.Loading

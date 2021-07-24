@@ -5,4 +5,5 @@
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/spacing_m" />
+    android:paddingTop="@dimen/spacing_m"
+    android:paddingBottom="@dimen/spacing_xs"/>
