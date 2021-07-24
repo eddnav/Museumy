@@ -15,20 +15,24 @@ class GalleryItemPagingSource(
     private var previousAuthor: String? = null
 
     override fun getRefreshKey(state: PagingState<Int, GalleryItem>): Int? {
-        return null
+        return state.anchorPosition
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GalleryItem> {
         val page = params.key ?: INITIAL_PAGE
-        val loadSize = params.loadSize
-        val artworks = artworkRepository.getArtworks(page, loadSize)
+        val artworks = artworkRepository.getArtworks(page, PAGE_SIZE)
 
-        val lastPage = artworks.size < loadSize
-        val nextPage = if (lastPage) {  null } else { page + 1 }
+        val lastPage = artworks.size < PAGE_SIZE
+        val previousPage = if (page == INITIAL_PAGE) null else page - 1
+        val nextPage = if (lastPage) {
+            null
+        } else {
+            page + 1
+        }
 
         return LoadResult.Page(
             data = createNewData(artworks, page),
-            prevKey = null,
+            prevKey = previousPage,
             nextKey = nextPage
         )
     }
@@ -50,6 +54,16 @@ class GalleryItemPagingSource(
         }
 
     companion object {
-        private const val INITIAL_PAGE = 0
+
+        // API docs say the pages are 0-indexed but page 0 and 1 for the same page size
+        // return the same items.
+        private const val INITIAL_PAGE = 1
+
+        /**
+         *  No offset based pagination means that we cannot make requests of varying sizes,
+         *   otherwise we run the risk of having duplicate items, thus we ignore
+         *   [PagingSource.LoadParams.loadSize]
+         */
+        private const val PAGE_SIZE = 10
     }
 }

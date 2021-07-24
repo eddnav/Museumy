@@ -22,8 +22,18 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val adapter = GalleryItemAdapter()
     private val repository: ArtworkRepository by inject()
     private val source = GalleryItemPagingSource(repository)
+
+    /**
+     * This value is not used, GallerItemPagingSource ignores
+     * [androidx.paging.PagingSource.LoadParams.loadSize] due to the nature of the API's
+     * pagination mechanism.
+     */
+    private val pagingConfig = PagingConfig(pageSize = 10)
     private val pager =
-        Pager(pagingSourceFactory = { source }, config = PagingConfig(pageSize = 10))
+        Pager(
+            pagingSourceFactory = { source },
+            config = pagingConfig
+        )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
