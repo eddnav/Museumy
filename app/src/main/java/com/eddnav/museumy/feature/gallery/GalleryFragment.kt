@@ -23,7 +23,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val repository: ArtworkRepository by inject()
     private val source = GalleryItemPagingSource(repository)
     private val pager =
-        Pager(pagingSourceFactory = { source }, config = PagingConfig(pageSize = 30))
+        Pager(pagingSourceFactory = { source }, config = PagingConfig(pageSize = 10))
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

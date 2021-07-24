@@ -50,6 +50,6 @@ class GalleryItemPagingSource(
         }
 
     companion object {
-        private const val INITIAL_PAGE = 1
+        private const val INITIAL_PAGE = 0
     }
 }
