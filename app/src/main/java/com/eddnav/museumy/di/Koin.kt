@@ -2,8 +2,10 @@ package com.eddnav.museumy.di
 
 import com.eddnav.museumy.data.MoshiFactory
 import com.eddnav.museumy.data.remote.RijksDataServiceFactory
+import com.eddnav.museumy.feature.gallery.GalleryViewModel
 import com.eddnav.museumy.repository.ArtworkRepository
 import com.eddnav.museumy.usecase.GetGalleryItemPagingDataFlow
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -14,7 +16,8 @@ object Koin {
             util,
             rijksDataModule,
             repositoryModule,
-            useCaseModule
+            useCaseModule,
+            viewModelModule
         )
 
     private val util = module {
@@ -30,6 +33,10 @@ object Koin {
     }
 
     private val useCaseModule = module {
-        single { GetGalleryItemPagingDataFlow(get()) }
+        factory { GetGalleryItemPagingDataFlow(get()) }
+    }
+
+    private val viewModelModule = module {
+        viewModel { GalleryViewModel(get()) }
     }
 }

@@ -9,18 +9,17 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eddnav.museumy.R
 import com.eddnav.museumy.databinding.FragmentGalleryBinding
-import com.eddnav.museumy.usecase.GetGalleryItemPagingDataFlow
 import com.eddnav.museumy.util.LoadStateAdapter
 import com.eddnav.museumy.util.SpacingItemDecoration
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     private lateinit var binding: FragmentGalleryBinding
 
-    private val getPagingDataFlow: GetGalleryItemPagingDataFlow by inject()
+    private val viewModel: GalleryViewModel by viewModel()
     private val adapter = GalleryItemAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,8 +49,8 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                 )
             )
         }
-        lifecycleScope.launch {
-            getPagingDataFlow().collect {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.galleryItemPagingDataFlow.collect {
                 adapter.submitData(it)
             }
         }
