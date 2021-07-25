@@ -72,6 +72,8 @@ class ArtworkFragment : Fragment(R.layout.fragment_artwork) {
         }
         binding.title.text = artwork.title
         binding.subtitle.text = getString(R.string.artwork_subtitle, artwork.physicalMedium, artwork.subtitle)
+
+        binding.description.isVisible = artwork.description != null
         binding.description.text = artwork.description
     }
 }

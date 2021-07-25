@@ -10,7 +10,7 @@ data class Artwork(
     @Json(name = "subTitle")
     val subtitle: String,
     @Json(name = "description")
-    val description: String,
+    val description: String?,
     @Json(name = "webImage")
     val image: Image?,
     @Json(name = "physicalMedium")
