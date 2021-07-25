@@ -23,6 +23,12 @@
     <fragment
         android:id="@+id/artworkFragment"
         android:name="com.eddnav.museumy.feature.artwork.ArtworkFragment"
-        tools:layout="@layout/fragment_artwork" />
+        tools:layout="@layout/fragment_artwork">
+
+        <argument
+            android:name="identifier"
+            app:argType="string" />
+
+    </fragment>
 
 </navigation>

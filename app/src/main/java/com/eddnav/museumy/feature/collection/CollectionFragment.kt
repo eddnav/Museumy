@@ -66,6 +66,6 @@ class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
     private fun navigateToArtwork(collectionEntry: CollectionEntry) {
         findNavController()
-            .navigate(CollectionFragmentDirections.actionCollectionFragmentToArtworkFragment())
+            .navigate(CollectionFragmentDirections.actionCollectionFragmentToArtworkFragment(collectionEntry.identifier))
     }
 }
