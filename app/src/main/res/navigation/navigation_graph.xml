@@ -9,5 +9,22 @@
         android:id="@+id/galleryFragment"
         android:name="com.eddnav.museumy.feature.gallery.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery">
+
+        <action
+            android:id="@+id/action_galleryFragment_to_artworkFragment"
+            app:destination="@id/artworkFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/artworkFragment"
+        android:name="com.eddnav.museumy.feature.artwork.ArtworkFragment"
+        android:label="fragment_artwork"
+        tools:layout="@layout/fragment_artwork" />
+
 </navigation>

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id "androidx.navigation.safeargs.kotlin"
 }
 
 def OPT_RIJKS_DATA_API_URL = 'RIJKS_DATA_API_URL'

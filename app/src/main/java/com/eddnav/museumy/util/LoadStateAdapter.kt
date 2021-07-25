@@ -6,16 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.paging.LoadStateAdapter as PagingLoadStateAdapter
 
 class LoadStateAdapter(
-    private val retry: () -> Unit
+    private val onRetryButtonClickListener: () -> Unit
 ) : PagingLoadStateAdapter<LoadStateAdapter.LoadStateViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
     ) = LoadStateViewHolder(
-        LoadStateItemView(parent.context) {
-            retry()
-        }
+        LoadStateItemView(parent.context, onRetryButtonClickListener = onRetryButtonClickListener)
     )
 
     override fun onBindViewHolder(

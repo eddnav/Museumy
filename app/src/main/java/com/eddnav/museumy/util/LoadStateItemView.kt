@@ -14,7 +14,7 @@ class LoadStateItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    private val retryClickListener: (() -> Unit)? = null
+    private val onRetryButtonClickListener: () -> Unit = {}
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding = ViewLoadStateItemBinding.inflate(LayoutInflater.from(context))
@@ -22,7 +22,7 @@ class LoadStateItemView @JvmOverloads constructor(
     init {
         addView(binding.root)
         binding.tryAgainButton.setOnClickListener() {
-            retryClickListener?.invoke()
+            onRetryButtonClickListener()
         }
         layoutParams = LayoutParams(
             MATCH_PARENT,

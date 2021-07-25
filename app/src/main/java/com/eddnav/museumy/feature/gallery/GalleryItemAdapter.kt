@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
+import com.eddnav.museumy.domain.model.Artwork
 
-class GalleryItemAdapter :
+class GalleryItemAdapter(
+    private val onArtworkItemClickListener: (artworkItem: Artwork) -> Unit
+) :
     PagingDataAdapter<GalleryItem, GalleryItemAdapter.GalleryItemViewHolder>(Comparator) {
 
     override fun onBindViewHolder(holder: GalleryItemViewHolder, position: Int) {
-        val item = getItem(position)
-        when (item) {
+        when (val item = getItem(position)) {
             is AuthorNameItem -> (holder.itemView as AuthorNameItemView).setItem(item)
             is ArtworkItem -> (holder.itemView as ArtworkItemView).setItem(item)
             null -> throw IllegalStateException()
@@ -23,7 +25,7 @@ class GalleryItemAdapter :
         return GalleryItemViewHolder(
             when (viewType) {
                 0 -> AuthorNameItemView(context)
-                1 -> ArtworkItemView(context)
+                1 -> ArtworkItemView(context, onClickListener = onArtworkItemClickListener)
                 else -> throw IllegalStateException()
             }
         )

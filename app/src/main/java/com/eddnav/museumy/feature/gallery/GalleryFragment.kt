@@ -1,14 +1,17 @@
 package com.eddnav.museumy.feature.gallery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eddnav.museumy.R
 import com.eddnav.museumy.databinding.FragmentGalleryBinding
+import com.eddnav.museumy.domain.model.Artwork
 import com.eddnav.museumy.util.LoadStateAdapter
 import com.eddnav.museumy.util.SpacingItemDecoration
 import kotlinx.coroutines.flow.collect
@@ -20,7 +23,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private lateinit var binding: FragmentGalleryBinding
 
     private val viewModel: GalleryViewModel by viewModel()
-    private val adapter = GalleryItemAdapter()
+    private val adapter = GalleryItemAdapter(::navigateToArtwork)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,5 +63,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         binding.tryAgainButton.setOnClickListener {
             adapter.refresh()
         }
+    }
+
+    private fun navigateToArtwork(artwork: Artwork) {
+        findNavController()
+            .navigate(GalleryFragmentDirections.actionGalleryFragmentToArtworkFragment())
     }
 }
