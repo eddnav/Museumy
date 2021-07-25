@@ -2,6 +2,7 @@ package com.eddnav.museumy.feature.artwork
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -28,29 +29,43 @@ class ArtworkFragment : Fragment(R.layout.fragment_artwork) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentArtworkBinding.bind(view)
         setupUiStateCollection()
+        setupTryAgainButton()
     }
 
     private fun setupUiStateCollection() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiStateStateFlow.collect {
                 when (it) {
-                    Loading -> setupLoadingState()
-                    is Error -> setupErrorState()
-                    is Loaded -> setupLoadedState(it.value)
+                    Loading -> showLoadingState()
+                    is Error -> showErrorState()
+                    is Loaded -> showLoadedState(it.value)
                 }
             }
         }
     }
 
-    private fun setupErrorState() {
-
+    private fun setupTryAgainButton() {
+        binding.tryAgainButton.setOnClickListener {
+            viewModel.refresh()
+        }
     }
 
-    private fun setupLoadingState() {
-
+    private fun showErrorState() {
+        binding.errorContainer.isVisible = true
+        binding.progressIndicator.isVisible = false
+        binding.loadedStateViews.isVisible = false
     }
 
-    private fun setupLoadedState(artwork: Artwork) {
+    private fun showLoadingState() {
+        binding.progressIndicator.isVisible = true
+        binding.errorContainer.isVisible = false
+        binding.loadedStateViews.isVisible = false
+    }
+
+    private fun showLoadedState(artwork: Artwork) {
+        binding.loadedStateViews.isVisible = true
+        binding.progressIndicator.isVisible = false
+        binding.errorContainer.isVisible = false
         binding.image.load(artwork.imageUrl) {
             crossfade(true)
             fallback(R.drawable.ic_palette_48)
