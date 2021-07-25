@@ -3,23 +3,23 @@ package com.eddnav.museumy.repository.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.eddnav.museumy.data.remote.RijksDataService
-import com.eddnav.museumy.domain.model.Artwork
+import com.eddnav.museumy.domain.model.CollectionEntry
 import com.eddnav.museumy.repository.conversion.toDomain
 
-class ArtworkPagingSource(
+class CollectionEntryPagingSource(
     private val rijksDataService: RijksDataService
-) : PagingSource<Int, Artwork>() {
+) : PagingSource<Int, CollectionEntry>() {
 
-    override fun getRefreshKey(state: PagingState<Int, Artwork>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, CollectionEntry>): Int? {
         return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Artwork> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CollectionEntry> {
         try {
             val page = params.key ?: INITIAL_PAGE
-            val artworks = getArtworks(page, PAGE_SIZE)
+            val entries = getCollectionEntries(page, PAGE_SIZE)
 
-            val lastPage = artworks.size < PAGE_SIZE
+            val lastPage = entries.size < PAGE_SIZE
             val previousPage = if (page == INITIAL_PAGE) null else page - 1
             val nextPage = if (lastPage) {
                 null
@@ -28,7 +28,7 @@ class ArtworkPagingSource(
             }
 
             return LoadResult.Page(
-                data = artworks,
+                data = entries,
                 prevKey = previousPage,
                 nextKey = nextPage
             )
@@ -37,9 +37,9 @@ class ArtworkPagingSource(
         }
     }
 
-    private suspend fun getArtworks(page: Int, pageSize: Int): List<Artwork> =
+    private suspend fun getCollectionEntries(page: Int, pageSize: Int): List<CollectionEntry> =
         rijksDataService.collection(page, pageSize)
-            .artworks
+            .collectionEntries
             .map {
                 it.toDomain()
             }

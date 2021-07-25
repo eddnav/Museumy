@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.gallery.GalleryFragment">
+    tools:context=".feature.collection.CollectionFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/galleryList"
+        android:id="@+id/collectionList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="vertical"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="2"
-        tools:listitem="@layout/view_artwork_item" />
+        tools:listitem="@layout/view_collection_entry_item" />
 
     <LinearLayout
         android:id="@+id/errorContainer"

@@ -3,7 +3,7 @@ package com.eddnav.museumy.data.remote.model
 import com.squareup.moshi.Json
 
 
-data class Artwork(
+data class CollectionEntry(
     @Json(name = "objectNumber")
     val identifier: String,
     @Json(name = "title")

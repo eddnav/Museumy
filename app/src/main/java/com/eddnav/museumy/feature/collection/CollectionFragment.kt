@@ -1,7 +1,6 @@
-package com.eddnav.museumy.feature.gallery
+package com.eddnav.museumy.feature.collection
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -10,29 +9,29 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eddnav.museumy.R
-import com.eddnav.museumy.databinding.FragmentGalleryBinding
-import com.eddnav.museumy.domain.model.Artwork
+import com.eddnav.museumy.databinding.FragmentCollectionBinding
+import com.eddnav.museumy.domain.model.CollectionEntry
 import com.eddnav.museumy.util.LoadStateAdapter
 import com.eddnav.museumy.util.SpacingItemDecoration
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class GalleryFragment : Fragment(R.layout.fragment_gallery) {
+class CollectionFragment : Fragment(R.layout.fragment_collection) {
 
-    private lateinit var binding: FragmentGalleryBinding
+    private lateinit var binding: FragmentCollectionBinding
 
-    private val viewModel: GalleryViewModel by viewModel()
-    private val adapter = GalleryItemAdapter(::navigateToArtwork)
+    private val viewModel: CollectionViewModel by viewModel()
+    private val adapter = CollectionItemAdapter(::navigateToArtwork)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentGalleryBinding.bind(view)
-        setupGalleryList()
+        binding = FragmentCollectionBinding.bind(view)
+        setupCollectionList()
         setupTryAgainButton()
     }
 
-    private fun setupGalleryList() {
+    private fun setupCollectionList() {
         with(adapter) {
             addLoadStateListener {
                 binding.progressIndicator.isVisible = it.refresh is LoadState.Loading
@@ -42,7 +41,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         val concatAdapter = adapter.withLoadStateFooter(
             footer = LoadStateAdapter(adapter::retry)
         )
-        with(binding.galleryList) {
+        with(binding.collectionList) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = concatAdapter
             addItemDecoration(
@@ -53,7 +52,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             )
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.galleryItemPagingDataFlow.collect {
+            viewModel.collectionItemPagingDataFlow.collect {
                 adapter.submitData(it)
             }
         }
@@ -65,8 +64,8 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         }
     }
 
-    private fun navigateToArtwork(artwork: Artwork) {
+    private fun navigateToArtwork(collectionEntry: CollectionEntry) {
         findNavController()
-            .navigate(GalleryFragmentDirections.actionGalleryFragmentToArtworkFragment())
+            .navigate(CollectionFragmentDirections.actionCollectionFragmentToArtworkFragment())
     }
 }

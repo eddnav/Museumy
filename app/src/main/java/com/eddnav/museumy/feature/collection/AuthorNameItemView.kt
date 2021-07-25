@@ -1,4 +1,4 @@
-package com.eddnav.museumy.feature.gallery
+package com.eddnav.museumy.feature.collection
 
 import android.content.Context
 import android.util.AttributeSet

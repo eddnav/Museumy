@@ -1,4 +1,4 @@
-package com.eddnav.museumy.feature.gallery
+package com.eddnav.museumy.feature.collection
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,18 +7,18 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import coil.load
 import com.eddnav.museumy.R
-import com.eddnav.museumy.databinding.ViewArtworkItemBinding
-import com.eddnav.museumy.domain.model.Artwork
+import com.eddnav.museumy.databinding.ViewCollectionEntryItemBinding
+import com.eddnav.museumy.domain.model.CollectionEntry
 import com.google.android.material.card.MaterialCardView
 
-class ArtworkItemView @JvmOverloads constructor(
+class CollectionEntryItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    private val onClickListener: (artwork: Artwork) -> Unit = {}
+    private val onClickListener: (collectionEntry: CollectionEntry) -> Unit = {}
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-    private val binding = ViewArtworkItemBinding.inflate(LayoutInflater.from(context))
+    private val binding = ViewCollectionEntryItemBinding.inflate(LayoutInflater.from(context))
 
     init {
         addView(binding.root)
@@ -29,18 +29,18 @@ class ArtworkItemView @JvmOverloads constructor(
 
     }
 
-    fun setItem(item: ArtworkItem) {
+    fun setItem(item: CollectionEntryItem) {
         with(binding) {
-            val artwork = item.artwork
-            title.text = artwork.title
-            identifier.text = artwork.identifier
-            image.load(artwork.imageUrl) {
+            val entry = item.collectionEntry
+            title.text = entry.title
+            identifier.text = entry.identifier
+            image.load(entry.imageUrl) {
                 crossfade(true)
                 fallback(R.drawable.ic_palette_48)
             }
         }
         setOnClickListener {
-            onClickListener(item.artwork)
+            onClickListener(item.collectionEntry)
         }
     }
 }

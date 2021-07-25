@@ -4,5 +4,5 @@ import com.squareup.moshi.Json
 
 data class CollectionResponse(
     @Json(name = "artObjects")
-    val artworks: List<Artwork>
+    val collectionEntries: List<CollectionEntry>
 )
