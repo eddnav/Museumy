@@ -7,6 +7,8 @@ fun RemoteArtwork.toDomain(): Artwork =
     Artwork(
         identifier,
         title,
+        subtitle,
+        description,
         image?.url,
-        primaryAuthor
+        physicalMedium
     )

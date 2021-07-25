@@ -2,4 +2,14 @@
     <string name="app_name">Museumy</string>
     <string name="something_went_wrong">Oeps, er ging iets mis</string>
     <string name="try_again">Probeer opnieuw</string>
+    <string name="artwork_subtitle">%1$s, %2$s</string>
+    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Mauris mollis maximus orci sit amet commodo. Orci varius natoque penatibus et magnis dis
+        parturient montes, nascetur ridiculus mus. Cras eu tortor in purus finibus tincidunt eget
+        vitae dui. Donec quis diam sagittis purus feugiat hendrerit sit amet sit amet odio. Donec
+        bibendum, lacus gravida dignissim lacinia, magna nisi ultrices elit, sed luctus est est in
+        dui. Nunc eu magna vitae mi euismod vulputate quis ut urna. Ut maximus, neque ac vulputate
+        semper, metus purus tempus turpis, non suscipit ante sapien sed lorem. Phasellus pretium
+        metus et consectetur volutpat. Nam vitae augue varius, fringilla nisi vitae, sagittis augue.
+    </string>
 </resources>

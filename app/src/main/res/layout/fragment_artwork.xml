@@ -1,13 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".feature.artwork.ArtworkFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        tools:context=".feature.artwork.ArtworkFragment">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/gun_metal_20"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_m"
+            android:textAppearance="?textAppearanceHeadline5"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="(Probably) A long title, a talented fellow, 2010" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="?textAppearanceCaption"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="Digital Art | 2000px x 1000px " />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:layout_marginBottom="@dimen/spacing_m"
+            android:textAppearance="?textAppearanceBody1"
+            app:layout_constraintTop_toBottomOf="@id/subtitle"
+            tools:text="@string/lorem_ipsum" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
