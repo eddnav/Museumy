@@ -15,9 +15,9 @@ interface RijksDataService {
     // TODO: Handle {culture} later? maybe by modifying the url with an interceptor.
 
     /**
-     * Sorted by primary author, only returns pieces with images.
+     * Sorted by author, only returns top pieces with images.
      */
-    @GET("nl/collection?imgonly=true&s=artist")
+    @GET("nl/collection?imgonly=true&toppieces=true&s=artist")
     suspend fun collection(
         @Query(PAGE_INDEX) pageIndex: Int,
         @Query(PAGE_SIZE) pageSize: Int
